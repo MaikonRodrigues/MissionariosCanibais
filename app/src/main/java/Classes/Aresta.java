@@ -4,6 +4,9 @@ public class Aresta {
     int nMissionarios, nCanibais;
     String pEstado;
 
+    public Aresta() {
+    }
+
     public Aresta(int nCanibais, int nMissionarios, String pEstado ) {
         this.nCanibais = nCanibais;
         this.nMissionarios = nMissionarios;

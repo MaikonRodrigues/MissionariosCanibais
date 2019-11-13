@@ -2,6 +2,8 @@ package com.example.missionarioscanibais;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -25,11 +27,11 @@ import Classes.Estado;
 
 public class MainActivity extends AppCompatActivity {
 
-    List<Estado> estadosList;
+    List<Estado>  estadosList;
     List<Aresta> arestasList;
-    Aresta aresta1, aresta2, aresta3;
-    Estado estado;
-    int i;
+    Aresta aresta1, aresta2, aresta3, arestaDeEntrada;
+    Estado estado, estadoAtual;
+    int i, contadorPassos;
     Button btnLevar;
     char ladoAtual;
 
@@ -45,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        contadorPassos = 0;
+        estado = new Estado();
 
         radioGroup = (RadioGroup) findViewById(R.id.radiogroup);
 
@@ -63,9 +67,167 @@ public class MainActivity extends AppCompatActivity {
         check_txt_2m   = (RadioButton)findViewById(R.id.txt_2m);
         check_txt_2c   = (RadioButton)findViewById(R.id.txt_2c);
 
-        Toast.makeText(this,"Esquerda(C: "+quantCanibEsquerda+" M:"+quantMissEsquerda+")" +
-                " barco (C: "+quantCAnibBarco+"M:"+quantMissBarco+") " +
-                "direira(C: "+quantCanibDireita+"M:"+quantMissDireita, Toast.LENGTH_LONG).show();
+        for (i = 0; i < 15; i ++){
+
+            if (i == 0){    // Estado inicial
+                aresta1 = new Aresta(1,0, "1_0d");  // Tres arestas possiveis sem retorno pos se trata
+                aresta2 = new Aresta(1,1, "1_1d");  // do estado q0
+                aresta3 = new Aresta(2,0, "2_0d");
+                arestasList.add(aresta1);
+                arestasList.add(aresta2);
+                arestasList.add(aresta3);
+
+
+                estadoAtual = new Estado("3_3e",3,3,'e', arestasList);
+
+                estadosList.add(estado);
+
+            }else if (i == 1){
+                // estado e acessado porem sem saida, logo so tem a aresta de volta para o estado inicial
+                aresta1 = new Aresta(1,0, "3_3e");
+                arestasList.add(aresta1);
+
+                estado = new Estado("1_0d",1,0,'d', arestasList);
+                estadosList.add(estado);
+
+            }else if (i == 2){
+
+                aresta1 = new Aresta(1,1, "3_3e");  // aresta de ida para estado anterior
+                aresta2 = new Aresta(0,1, "2_3e");  // aresta para o proximo
+                arestasList.add(aresta1);
+                arestasList.add(aresta2);
+
+                estado = new Estado("1_1d",1,1,'d', arestasList);
+                estadosList.add(estado);
+
+            }else if (i == 3){
+
+                aresta1 = new Aresta(1,0, "2_3e" ); // aresta de ida
+                aresta2 = new Aresta(2,0, "3_3d" ); // aresta de volta
+                arestasList.add(aresta1);
+                arestasList.add(aresta2);
+
+                estado = new Estado("2_0d",2,0,'d', arestasList);
+                estadosList.add(estado);
+
+            }else if (i == 4){
+
+                aresta1 = new Aresta(2,0, "3_0d");  // aresta de ida
+                aresta2 = new Aresta(0,1, "1_1d");  // aresta de volta
+                aresta3 = new Aresta(1,0, "2_0d");  // aresta de volta
+                arestasList.add(aresta1);
+                arestasList.add(aresta2);
+                arestasList.add(aresta3);
+
+                estado = new Estado("2_3e",2,3,'e', arestasList);
+                estadosList.add(estado);
+
+            }else if (i == 5){
+
+                aresta1 = new Aresta(1,0, "1_3e");  //aresta de ida
+                aresta2 = new Aresta(2,0, "2_3e");  //aresta de volta
+                arestasList.add(aresta1);
+                arestasList.add(aresta2);
+
+                estado = new Estado("3_0d",3,0,'d', arestasList);
+                estadosList.add(estado);
+
+            }else if (i == 6){
+
+                aresta1 = new Aresta(0,2, "2_2d");  //aresta de ida
+                aresta2 = new Aresta(1,0, "3_0d");  //aresta de volta
+                arestasList.add(aresta1);
+                arestasList.add(aresta2);
+
+                estado = new Estado("1_3e",1,3,'e', arestasList);
+                estadosList.add(estado);
+
+            }else if (i == 7){
+
+                aresta1 = new Aresta(1,1, "2_2e");  //aresta de ida
+                aresta2 = new Aresta(0,2, "1_3e");  //aresta de ida
+                arestasList.add(aresta1);
+                arestasList.add(aresta2);
+
+                estado = new Estado("2_2d",2,2,'d', arestasList);
+                estadosList.add(estado);
+
+            }else if (i == 8){
+
+                aresta1 = new Aresta(0,2, "1_3d");  // aresta de ida
+                aresta2 = new Aresta(1,1, "2_2d");  // aresta de volta
+                arestasList.add(aresta1);
+                arestasList.add(aresta2);
+
+                estado = new Estado("2_2e",2,2,'e', arestasList);
+                estadosList.add(estado);
+
+            }else if (i == 9){
+
+                aresta1 = new Aresta(1,0, "3_0e");  //aresta de ida
+                aresta2 = new Aresta(1,0, "0_2e");  //aresta de volta
+                arestasList.add(aresta1);
+                arestasList.add(aresta2);
+
+                estado = new Estado("1_3d",2,2,'d', arestasList);
+                estadosList.add(estado);
+
+            }else if (i == 10){
+
+                aresta1 = new Aresta(2,0, "2_3d");  //aresta de ida
+                aresta2 = new Aresta(1,0, "1_3d");  //aresta de volta
+                arestasList.add(aresta1);
+                arestasList.add(aresta2);
+
+                estado = new Estado("3_0e",3,0,'e', arestasList);
+                estadosList.add(estado);
+
+            }else if (i == 11){
+
+                aresta1 = new Aresta(1,0, "2_0e");     //aresta de ida
+                aresta2 = new Aresta(0,1, "1_1e");      // aresta de ida
+                aresta3 = new Aresta(2,0, "3_3e");      // aresta de volta
+                arestasList.add(aresta1);
+                arestasList.add(aresta2);
+                arestasList.add(aresta3);
+
+                estado = new Estado("2_3d",2,3,'d', arestasList);
+                estadosList.add(estado);
+
+            }else if (i == 12){
+
+                aresta1 = new Aresta(2,0, "3_3d");  // aresta de ida pro estado final
+                aresta2 = new Aresta(1,0, "2_3d");  // aresta de volta
+                arestasList.add(aresta1);
+                arestasList.add(aresta2);
+
+                estado = new Estado("2_0e",2,0,'e', arestasList);
+                estadosList.add(estado);
+
+            }else if (i == 13){
+
+                aresta1 = new Aresta(1,1, "3_3d");  // aresta de ida para o estado final
+                aresta2 = new Aresta(0,1, "2_3d");  // aresta de volta
+                arestasList.add(aresta1);
+                arestasList.add(aresta2);
+
+                estado = new Estado("1_1e",1,1,'e', arestasList);
+                estadosList.add(estado);
+
+            }else if (i == 13){
+
+                aresta1 = new Aresta(1,1, "1_1e");  // aresta de ida para o estado final
+                aresta2 = new Aresta(2,0, "2_0e");  // aresta de volta
+                arestasList.add(aresta1);
+                arestasList.add(aresta2);
+
+                estado = new Estado("3_3d",3,3,'d', arestasList);
+                estadosList.add(estado);
+
+            }
+        }
+
+
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -98,6 +260,7 @@ public class MainActivity extends AppCompatActivity {
                 if (levar_1c1m == 1){
                     try {
                         rodar(1, 1, ladoAtual);
+                        rodar1(1, 1, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -105,6 +268,7 @@ public class MainActivity extends AppCompatActivity {
                 }else if (levar_1c == 1){
                     try {
                         rodar(1, 0, ladoAtual);
+                        rodar1(1, 0, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -112,6 +276,7 @@ public class MainActivity extends AppCompatActivity {
                 }else if (levar_1m == 1){
                     try {
                         rodar(0, 1, ladoAtual);
+                        rodar1(0, 1, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -119,6 +284,7 @@ public class MainActivity extends AppCompatActivity {
                 }else if (levar_1c == 1){
                     try {
                         rodar(1, 0, ladoAtual);
+                        rodar1(1, 0, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -126,6 +292,7 @@ public class MainActivity extends AppCompatActivity {
                 } else if (levar_2c == 1){
                     try {
                         rodar(2, 0, ladoAtual);
+                        rodar1(2, 0, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -133,6 +300,7 @@ public class MainActivity extends AppCompatActivity {
                 }else if (levar_2m == 1){
                     try {
                         rodar(0, 2, ladoAtual);
+                        rodar1(0, 2, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -141,109 +309,44 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        for (i = 0; i < 15; i ++){
 
-            if (i == 0){
-                aresta1 = new Aresta(1,0, "1_0d");
-                aresta2 = new Aresta(1,1, "1_1d");
-                aresta3 = new Aresta(2,0, "2_0d");
-                arestasList.add(aresta1);
-                arestasList.add(aresta2);
-                arestasList.add(aresta3);
-
-                estado = new Estado("3_3e",3,3,'e', arestasList);
-            }else if (i == 1){
-
-                aresta1 = new Aresta(1,0, "3_3e");
-                arestasList.add(aresta1);
-
-                estado = new Estado("1_0d",1,0,'d', arestasList);
-            }else if (i == 2){
-
-                aresta1 = new Aresta(1,1, "3_3e");
-                aresta2 = new Aresta(0,1, "2_3e");
-                arestasList.add(aresta1);
-
-                estado = new Estado("1_1d",1,1,'d', arestasList);
-            }else if (i == 3){
-
-                aresta1 = new Aresta(1,0);
-                arestasList.add(aresta1);
-
-                estado = new Estado(2,0,'d', arestasList);
-            }else if (i == 4){
-
-                aresta1 = new Aresta(2,0);
-                arestasList.add(aresta1);
-
-                estado = new Estado(2,3,'e', arestasList);
-            }else if (i == 5){
-
-                aresta1 = new Aresta(1,0);
-                arestasList.add(aresta1);
-
-                estado = new Estado(3,0,'d', arestasList);
-            }else if (i == 6){
-
-                aresta1 = new Aresta(0,2);
-                arestasList.add(aresta1);
-
-                estado = new Estado(1,3,'e', arestasList);
-            }else if (i == 7){
-
-                aresta1 = new Aresta(1,1);
-                arestasList.add(aresta1);
-
-                estado = new Estado(2,2,'d', arestasList);
-            }else if (i == 8){
-
-                aresta1 = new Aresta(0,2);
-                arestasList.add(aresta1);
-
-                estado = new Estado(2,2,'e', arestasList);
-            }else if (i == 9){
-
-                aresta1 = new Aresta(1,0);
-                arestasList.add(aresta1);
-
-                estado = new Estado(2,2,'d', arestasList);
-            }else if (i == 10){
-
-                aresta1 = new Aresta(2,0);
-                arestasList.add(aresta1);
-
-                estado = new Estado(3,0,'e', arestasList);
-            }else if (i == 11){
-
-                aresta1 = new Aresta(1,0);
-                aresta2 = new Aresta(0,1);
-                arestasList.add(aresta1);
-                arestasList.add(aresta2);
-
-                estado = new Estado(2,3,'d', arestasList);
-            }else if (i == 12){
-
-                aresta1 = new Aresta(2,0);
-                arestasList.add(aresta1);
-
-                estado = new Estado(2,0,'e', arestasList);
-            }else if (i == 13){
-
-                aresta1 = new Aresta(1,1);
-                arestasList.add(aresta1);
-
-                estado = new Estado(1,1,'e', arestasList);
-            }else if (i == 13){
-
-               estado = new Estado(3,3,'d', arestasList);
-            }
-        }
 
 
     }
 
+    public void rodar1(int quantCanibais, int quantMiss, char origem){
+
+        contadorPassos += 1;
+        estadoAtual.setId(estadosList.get(contadorPassos).getId());
+        estadoAtual.setArestas(estadosList.get(contadorPassos).getArestas());
+
+        Aresta arestaProxEstado, arestaAux;
+
+        arestaAux = new Aresta();
+        arestaDeEntrada = new Aresta(quantCanibais, quantMiss,"");
+        arestaProxEstado = verificaArestaEstadoAtual(arestaDeEntrada, estadoAtual);
+
+        if (arestaProxEstado == null){
+            gameOver();
+        }else{
+
+            for(int i = 0; i < estadosList.size(); i++){
+                for(int j = 0; j < estadosList.get(i).getArestas().size(); j++){
+                    arestaAux = estadosList.get(i).getArestas().get(j);
+                    if (arestaAux.getpEstado() == arestaProxEstado.getpEstado()){
+                        estadoAtual = estadosList.get(i);
+                        Toast.makeText(this, "Estado Atual :"+estadoAtual.getId(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        }
+
+    }
+
     public void rodar(int quantCanibais, int quantMiss, char origem) throws InterruptedException {
+
         if (origem == 'd'){
+
             quantMissDireita -= quantMiss;
             quantCanibDireita -= quantCanibais;
             setImageDireita();
@@ -265,7 +368,12 @@ public class MainActivity extends AppCompatActivity {
             quantMissBarco = 0;
             setImageBarco();
 
+
+
         }else{
+
+            arestaDeEntrada = new Aresta(quantCanibais, quantMiss,"");
+
             quantCanibEsquerda -= quantCanibais;
             quantMissEsquerda -= quantMiss;
             setImageEsquerda();
@@ -290,10 +398,23 @@ public class MainActivity extends AppCompatActivity {
             imgEsquerda.setVisibility(View.INVISIBLE);
         }
         else{
-
             imgEsquerda.setVisibility(View.VISIBLE);
         }
 
+    }
+
+    public Aresta verificaArestaEstadoAtual(Aresta arestaDEntrada, Estado estadAtual){
+
+        for (int i = 0; i < estadoAtual.getArestas().size(); i++){
+            if (arestaDEntrada.getnCanibais() == estadAtual.getArestas().get(i).getnCanibais()
+                    && arestaDEntrada.getnMissionarios() == estadAtual.getArestas().get(i).getnMissionarios() ){
+                Aresta arestaParaProxEstado = new Aresta(estadAtual.getArestas().get(i).getnCanibais(),
+                        estadAtual.getArestas().get(i).getnMissionarios(),
+                        estadAtual.getArestas().get(i).getpEstado());
+                return arestaParaProxEstado;
+            }
+        }
+        return null;
     }
 
     public void setImageBarco(){
@@ -378,5 +499,26 @@ public class MainActivity extends AppCompatActivity {
             imgCanoa.setX(130);
            // new Thread().sleep(1000);
         }
+    }
+
+    public void gameOver(){
+        //Cria o gerador do AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //define o titulo
+        builder.setTitle("Game Over");
+        //define a mensagem
+        builder.setMessage("Você perdeu o jogo Tente novamente !");
+        //define um botão como positivo
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //cria o AlertDialog
+        AlertDialog alerta = builder.create();
+        //Exibe
+        alerta.show();
     }
 }
