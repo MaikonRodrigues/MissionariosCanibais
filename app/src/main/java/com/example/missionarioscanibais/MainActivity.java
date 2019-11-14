@@ -260,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
                 if (levar_1c1m == 1){
                     try {
                         rodar(1, 1, ladoAtual);
-                        rodar1(1, 1, ladoAtual);
+                        //rodar1(1, 1, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -268,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
                 }else if (levar_1c == 1){
                     try {
                         rodar(1, 0, ladoAtual);
-                        rodar1(1, 0, ladoAtual);
+                        //rodar1(1, 0, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -276,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
                 }else if (levar_1m == 1){
                     try {
                         rodar(0, 1, ladoAtual);
-                        rodar1(0, 1, ladoAtual);
+                       // rodar1(0, 1, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -284,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
                 }else if (levar_1c == 1){
                     try {
                         rodar(1, 0, ladoAtual);
-                        rodar1(1, 0, ladoAtual);
+                       // rodar1(1, 0, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -292,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
                 } else if (levar_2c == 1){
                     try {
                         rodar(2, 0, ladoAtual);
-                        rodar1(2, 0, ladoAtual);
+                      //  rodar1(2, 0, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -300,7 +300,7 @@ public class MainActivity extends AppCompatActivity {
                 }else if (levar_2m == 1){
                     try {
                         rodar(0, 2, ladoAtual);
-                        rodar1(0, 2, ladoAtual);
+                       // rodar1(0, 2, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -329,7 +329,6 @@ public class MainActivity extends AppCompatActivity {
         if (arestaProxEstado == null){
             gameOver();
         }else{
-
             for(int i = 0; i < estadosList.size(); i++){
                 for(int j = 0; j < estadosList.get(i).getArestas().size(); j++){
                     arestaAux = estadosList.get(i).getArestas().get(j);
@@ -346,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
     public void rodar(int quantCanibais, int quantMiss, char origem) throws InterruptedException {
 
         if (origem == 'd'){
-
+            rodar1(quantCanibais, quantMiss, origem);
             quantMissDireita -= quantMiss;
             quantCanibDireita -= quantCanibais;
             setImageDireita();
@@ -371,7 +370,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         }else{
-
+            rodar1(quantCanibais, quantMiss, origem);
             arestaDeEntrada = new Aresta(quantCanibais, quantMiss,"");
 
             quantCanibEsquerda -= quantCanibais;
