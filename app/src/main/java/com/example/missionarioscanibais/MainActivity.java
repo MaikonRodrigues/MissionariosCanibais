@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     List<Aresta> arestasList;
     Aresta aresta1, aresta2, aresta3, arestaDeEntrada;
     Estado estado, estadoAtual;
-    int i, contadorPassos;
+    int i, contadorPassos = 0;
     Button btnLevar;
     char ladoAtual;
 
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        contadorPassos = 0;
+
         estado = new Estado();
 
         radioGroup = (RadioGroup) findViewById(R.id.radiogroup);
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 arestasList.add(aresta3);
 
 
-                estadoAtual = new Estado("3_3e",3,3,'e', arestasList);
+                estado = new Estado("3_3e",3,3,'e', arestasList);
 
                 estadosList.add(estado);
 
@@ -259,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (levar_1c1m == 1){
                     try {
-                        rodar(1, 1, ladoAtual);
+                        rodar(1, 1, ladoAtual, estadosList);
                         //rodar1(1, 1, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }else if (levar_1c == 1){
                     try {
-                        rodar(1, 0, ladoAtual);
+                        rodar(1, 0, ladoAtual, estadosList);
                         //rodar1(1, 0, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
@@ -275,7 +275,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }else if (levar_1m == 1){
                     try {
-                        rodar(0, 1, ladoAtual);
+                        rodar(0, 1, ladoAtual, estadosList);
                        // rodar1(0, 1, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
@@ -283,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }else if (levar_1c == 1){
                     try {
-                        rodar(1, 0, ladoAtual);
+                        rodar(1, 0, ladoAtual, estadosList);
                        // rodar1(1, 0, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
@@ -291,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 } else if (levar_2c == 1){
                     try {
-                        rodar(2, 0, ladoAtual);
+                        rodar(2, 0, ladoAtual, estadosList);
                       //  rodar1(2, 0, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
@@ -299,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }else if (levar_2m == 1){
                     try {
-                        rodar(0, 2, ladoAtual);
+                        rodar(0, 2, ladoAtual, estadosList);
                        // rodar1(0, 2, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
@@ -314,38 +314,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void rodar1(int quantCanibais, int quantMiss, char origem){
-
-        contadorPassos += 1;
-        estadoAtual.setId(estadosList.get(contadorPassos).getId());
-        estadoAtual.setArestas(estadosList.get(contadorPassos).getArestas());
-
-        Aresta arestaProxEstado, arestaAux;
-
-        arestaAux = new Aresta();
-        arestaDeEntrada = new Aresta(quantCanibais, quantMiss,"");
-        arestaProxEstado = verificaArestaEstadoAtual(arestaDeEntrada, estadoAtual);
-
-        if (arestaProxEstado == null){
-            gameOver();
-        }else{
-            for(int i = 0; i < estadosList.size(); i++){
-                for(int j = 0; j < estadosList.get(i).getArestas().size(); j++){
-                    arestaAux = estadosList.get(i).getArestas().get(j);
-                    if (arestaAux.getpEstado() == arestaProxEstado.getpEstado()){
-                        estadoAtual = estadosList.get(i);
-                        Toast.makeText(this, "Estado Atual :"+estadoAtual.getId(), Toast.LENGTH_LONG).show();
-                    }
-                }
-            }
-        }
-
-    }
-
-    public void rodar(int quantCanibais, int quantMiss, char origem) throws InterruptedException {
+    public void rodar(int quantCanibais, int quantMiss, char origem, List<Estado> L_Estados) throws InterruptedException {
 
         if (origem == 'd'){
-            rodar1(quantCanibais, quantMiss, origem);
+            rodar1(quantCanibais, quantMiss, L_Estados);
             quantMissDireita -= quantMiss;
             quantCanibDireita -= quantCanibais;
             setImageDireita();
@@ -355,10 +327,10 @@ public class MainActivity extends AppCompatActivity {
 
             //setImageBarco();
 
-           // new Thread().sleep(3000);
+            // new Thread().sleep(3000);
             movimentoCanoa('e');
             setImageBarco();
-           // new Thread().sleep(3000);
+            // new Thread().sleep(3000);
 
             quantCanibEsquerda += quantCanibais;
             quantMissEsquerda += quantMiss;
@@ -370,7 +342,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         }else{
-            rodar1(quantCanibais, quantMiss, origem);
+            rodar1(quantCanibais, quantMiss, L_Estados);
             arestaDeEntrada = new Aresta(quantCanibais, quantMiss,"");
 
             quantCanibEsquerda -= quantCanibais;
@@ -383,8 +355,8 @@ public class MainActivity extends AppCompatActivity {
 
             //new Thread().sleep(3000);
             movimentoCanoa('d');
-           // Toast.makeText(this,"Barco(M: "+quantMissBarco+" C:"+quantCAnibBarco, Toast.LENGTH_LONG).show();
-           // setImageBarco();
+            // Toast.makeText(this,"Barco(M: "+quantMissBarco+" C:"+quantCAnibBarco, Toast.LENGTH_LONG).show();
+            // setImageBarco();
             new Thread().sleep(3000);
             quantMissDireita += quantMiss;
             quantCanibDireita += quantCanibais;
@@ -401,6 +373,40 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+    public void rodar1(int quantCanibais, int quantMiss, List<Estado> L_Estados){
+
+        int j;
+        estadoAtual = new Estado();
+        estadoAtual.setId(L_Estados.get(0).getId());
+        estadoAtual.setArestas(L_Estados.get(0).getArestas());
+        contadorPassos += 1;
+
+        Aresta arestaProxEstado, arestaAux;
+
+        arestaAux = new Aresta();
+        arestaDeEntrada = new Aresta(quantCanibais, quantMiss,"");
+        arestaProxEstado = verificaArestaEstadoAtual(arestaDeEntrada, estadoAtual);
+
+        if (arestaProxEstado == null){
+            gameOver();
+        }else{
+            Toast.makeText(this, "tamanho :"+L_Estados.size(), Toast.LENGTH_LONG).show();
+               for( i = 0; i < 14 ; i++){
+                Toast.makeText(this, "tamanho :"+L_Estados.size(), Toast.LENGTH_LONG).show();
+                 for( j = 0; j < L_Estados.get(i).getArestas().size(); j++){
+                    arestaAux = L_Estados.get(i).getArestas().get(j);
+                    if (arestaAux.getpEstado() == arestaProxEstado.getpEstado()){
+                        estadoAtual = L_Estados.get(i);
+                        Toast.makeText(this, "Estado Atual :"+estadoAtual.getId(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+        }
+
+    }
+
+
 
     public Aresta verificaArestaEstadoAtual(Aresta arestaDEntrada, Estado estadAtual){
 
