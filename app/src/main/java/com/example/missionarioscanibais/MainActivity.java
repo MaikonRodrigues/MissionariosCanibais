@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Stack;
 
 import Classes.Aresta;
+import Classes.BuscaEmProfundidade;
 import Classes.Estado;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     int i, contadorPassos = 0;
     Button btnLevar;
     char ladoAtual;
+    BuscaEmProfundidade buscaEmProfundidade;
 
     ImageView imgCanoa, imgDireita, imgEsquerda;
     private RadioGroup radioGroup;
@@ -48,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         estado = new Estado();
 
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 arestasList.add(aresta3);
 
 
-                estado = new Estado("3_3e",3,3,'e', arestasList);
+                estado = new Estado("3_3e",3,3,'e', arestasList, 0);
 
                 estadosList.add(estado);
 
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 aresta1 = new Aresta(1,0, "3_3e", 0);
                 arestasList.add(aresta1);
 
-                estado = new Estado("1_0d",1,0,'d', arestasList);
+                estado = new Estado("1_0d",1,0,'d', arestasList,1);
                 estadosList.add(estado);
 
             }else if (i == 2){
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 arestasList.add(aresta1);
                 arestasList.add(aresta2);
 
-                estado = new Estado("1_1d",1,1,'d', arestasList);
+                estado = new Estado("1_1d",1,1,'d', arestasList,2);
                 estadosList.add(estado);
 
             }else if (i == 3){
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 arestasList.add(aresta1);
                 arestasList.add(aresta2);
 
-                estado = new Estado("2_0d",2,0,'d', arestasList);
+                estado = new Estado("2_0d",2,0,'d', arestasList,3);
                 estadosList.add(estado);
 
             }else if (i == 4){
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 arestasList.add(aresta2);
                 arestasList.add(aresta3);
 
-                estado = new Estado("2_3e",2,3,'e', arestasList);
+                estado = new Estado("2_3e",2,3,'e', arestasList,4);
                 estadosList.add(estado);
 
             }else if (i == 5){
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 arestasList.add(aresta1);
                 arestasList.add(aresta2);
 
-                estado = new Estado("3_0d",3,0,'d', arestasList);
+                estado = new Estado("3_0d",3,0,'d', arestasList,5);
                 estadosList.add(estado);
 
             }else if (i == 6){
@@ -141,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                 arestasList.add(aresta1);
                 arestasList.add(aresta2);
 
-                estado = new Estado("1_3e",1,3,'e', arestasList);
+                estado = new Estado("1_3e",1,3,'e', arestasList,6);
                 estadosList.add(estado);
 
             }else if (i == 7){
@@ -151,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                 arestasList.add(aresta1);
                 arestasList.add(aresta2);
 
-                estado = new Estado("2_2d",2,2,'d', arestasList);
+                estado = new Estado("2_2d",2,2,'d', arestasList,7);
                 estadosList.add(estado);
 
             }else if (i == 8){
@@ -161,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                 arestasList.add(aresta1);
                 arestasList.add(aresta2);
 
-                estado = new Estado("2_2e",2,2,'e', arestasList);
+                estado = new Estado("2_2e",2,2,'e', arestasList,8);
                 estadosList.add(estado);
 
             }else if (i == 9){
@@ -171,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
                 arestasList.add(aresta1);
                 arestasList.add(aresta2);
 
-                estado = new Estado("1_3d",2,2,'d', arestasList);
+                estado = new Estado("1_3d",2,2,'d', arestasList,9);
                 estadosList.add(estado);
 
             }else if (i == 10){
@@ -181,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
                 arestasList.add(aresta1);
                 arestasList.add(aresta2);
 
-                estado = new Estado("3_0e",3,0,'e', arestasList);
+                estado = new Estado("3_0e",3,0,'e', arestasList,10);
                 estadosList.add(estado);
 
             }else if (i == 11){
@@ -193,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
                 arestasList.add(aresta2);
                 arestasList.add(aresta3);
 
-                estado = new Estado("2_3d",2,3,'d', arestasList);
+                estado = new Estado("2_3d",2,3,'d', arestasList,11);
                 estadosList.add(estado);
 
             }else if (i == 12){
@@ -203,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
                 arestasList.add(aresta1);
                 arestasList.add(aresta2);
 
-                estado = new Estado("2_0e",2,0,'e', arestasList);
+                estado = new Estado("2_0e",2,0,'e', arestasList,12);
                 estadosList.add(estado);
 
             }else if (i == 13){
@@ -213,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
                 arestasList.add(aresta1);
                 arestasList.add(aresta2);
 
-                estado = new Estado("1_1e",1,1,'e', arestasList);
+                estado = new Estado("1_1e",1,1,'e', arestasList,13);
                 estadosList.add(estado);
 
             }else if (i == 14){
@@ -223,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
                 arestasList.add(aresta1);
                 arestasList.add(aresta2);
 
-                estado = new Estado("3_3d",3,3,'d', arestasList);
+                estado = new Estado("3_3d",3,3,'d', arestasList,14);
                 estadosList.add(estado);
 
             }
@@ -255,6 +256,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        buscaEmProfundidade = new BuscaEmProfundidade(14,estadosList,MainActivity.this);
 
         btnLevar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -308,6 +311,7 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+                buscaEmProfundidade.busca(estadosList.get(0));
             }
         });
 
@@ -412,7 +416,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }*/
-        buscaProfundidade(estadosList.get(0));
+       // buscaProfundidade(estadosList.get(0));
     }
 
     public String buscaProfundidade(Estado estado){
