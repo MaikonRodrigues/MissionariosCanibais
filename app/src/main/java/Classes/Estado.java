@@ -7,16 +7,26 @@ public class Estado {
     char pCanoa;
     String id;
     List<Aresta> arestas;
+    int pLista;     // Posicao na lista
 
     public Estado() {
     }
 
-    public Estado(String id, int nCanibais,int nMissionarios , char pCanoa, List<Aresta> arestas) {
+    public Estado(String id, int nCanibais,int nMissionarios , char pCanoa, List<Aresta> arestas, int pLista) {
         this.id = id;
         this.nCanibais = nCanibais;
         this.nMissionarios = nMissionarios;
         this.pCanoa = pCanoa;
         this.arestas = arestas;
+        this.pLista = pLista;
+    }
+
+    public int getpLista() {
+        return pLista;
+    }
+
+    public void setpLista(int pLista) {
+        this.pLista = pLista;
     }
 
     public List<Aresta> getArestas() {

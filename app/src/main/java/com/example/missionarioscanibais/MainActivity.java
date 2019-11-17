@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import Classes.Aresta;
 import Classes.Estado;
@@ -374,6 +375,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
+
 
     public void rodar1(int quantCanibais, int quantMiss, List<Estado> L_Estados){
 
