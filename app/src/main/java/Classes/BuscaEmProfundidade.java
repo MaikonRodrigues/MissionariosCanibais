@@ -39,7 +39,7 @@ public class BuscaEmProfundidade {
         }
         this.textoResposta = retorno;
     }
-    //exibe o Resultado
+
     public void exibirTextoResultado() {
         if (this.textoResposta != null) {
             //imprime o resultado do caminho
@@ -50,26 +50,34 @@ public class BuscaEmProfundidade {
         }
     }
 
+    public Stack<Estado> getPilhaEstados() {
+        return pilhaEstados;
+    }
 
-    public void busca(Estado estado){
-        this.pilhaEstados.push(estado);
+    public void setPilhaEstados(Stack<Estado> pilhaEstados) {
+        this.pilhaEstados = pilhaEstados;
+    }
+
+    public boolean busca(Estado estado){
         if (isResultado(estado)){
             //  Exibir camiho
-            for (int i = 0; i < pilhaEstados.size(); i++){
-                Toast.makeText(context, "sequencia de estados: "+pilhaEstados.get(i).getId(), Toast.LENGTH_LONG).show();
-            }
+            this.pilhaEstados.push(estado);
+            return true;
         }else {
             //  Expandir os Próximos nos
-            for (int i = 0; i < estado.getArestas().size(); i++){
-                if (estadoList.get(estado.getArestas().get(i).getpLista()).getArestas().isEmpty()){
-                    this.pilhaEstados.pop();
-                    return;
-                }else{
-                    busca(estadoList.get(estado.getArestas().get(i).getpLista()));
+            int tamanho = estado.getArestas().size();
+            if (tamanho == 0)
+                return false;
+            else {
+                int i = 0;
+                while (!busca(estadoList.get(estado.getArestas().get(i).getpLista()))) {
+                    i++;
+                    if (i >= tamanho && pilhaEstados.isEmpty())
+                        return false;
                 }
-
+                this.pilhaEstados.push(estado);
+                return true;
             }
         }
-        this.pilhaEstados.pop();
     }
 }

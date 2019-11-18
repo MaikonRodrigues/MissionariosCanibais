@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     Aresta aresta1, aresta2, aresta3, arestaDeEntrada;
     Estado estado, estadoAtual;
     int i, contadorPassos = 0;
-    Button btnLevar;
+    Button btnLevar, btnSolucao;
     char ladoAtual;
     BuscaEmProfundidade buscaEmProfundidade;
 
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         imgCanoa = (ImageView) findViewById(R.id.imgCanoa);
         imgDireita = (ImageView) findViewById(R.id.imgDireita);
         imgEsquerda = (ImageView)findViewById(R.id.imgEsq);
-        btnLevar = (Button)findViewById(R.id.btnLevar);
+        btnLevar = (Button)findViewById(R.id.btnLevar);     btnSolucao = (Button)findViewById(R.id.btnSolucao);
 
         check_txt_1m1c = (RadioButton)findViewById(R.id.txt_1m1c);
         check_txt_1m   = (RadioButton)findViewById(R.id.txt_1m);
@@ -290,7 +290,8 @@ public class MainActivity extends AppCompatActivity {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                }else if (levar_1m == 1){
+                }
+                else if (levar_1m == 1){
                     try {
                         rodar(0, 1, ladoAtual, estadosList);
                        // rodar1(0, 1, ladoAtual);
@@ -306,7 +307,8 @@ public class MainActivity extends AppCompatActivity {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                } else if (levar_2c == 1){
+                }
+                else if (levar_2c == 1){
                     try {
                         rodar(2, 0, ladoAtual, estadosList);
                       //  rodar1(2, 0, ladoAtual);
@@ -323,19 +325,29 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-                buscaEmProfundidade.busca(estadosList.get(0));
+
+
             }
         });
 
-
-
+        btnSolucao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                buscaEmProfundidade.busca(estadosList.get(0));
+                Stack<Estado> pilhaaux = buscaEmProfundidade.getPilhaEstados();
+                while(!pilhaaux.isEmpty()){
+                    Estado a = pilhaaux.pop();
+                    Toast.makeText(MainActivity.this, "Desempilha: "+ a.getId(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
     }
 
     public void rodar(int quantCanibais, int quantMiss, char origem, List<Estado> L_Estados) throws InterruptedException {
 
         if (origem == 'd'){
-            rodar1(quantCanibais, quantMiss, L_Estados);
+
             quantMissDireita -= quantMiss;
             quantCanibDireita -= quantCanibais;
             setImageDireita();
@@ -360,7 +372,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         }else{
-            rodar1(quantCanibais, quantMiss, L_Estados);
+
             arestaDeEntrada = new Aresta(quantCanibais, quantMiss,"", 0);
 
             quantCanibEsquerda -= quantCanibais;
@@ -455,32 +467,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    /*
-    public List<Estado> bbuscaProfundidade(Estado estado){
-        List<Estado> estVisitados;
-        estVisitados = new ArrayList<>();
-        if (estado.getId().equals("3_3d")){
-            Toast.makeText(this, "Adicionou: "+estado.getId(), Toast.LENGTH_LONG).show();
-            estVisitados.add(estadoAtual);
-            return estVisitados;
-        }else {
-            int tamanho = estado.getArestas().size();
-            if (tamanho == 0)
-                return null;
-            else{
-                int aresta = 0;
-                while (estVisitados.isEmpty()){
-                    estVisitados.addAll(buscaProfundidade(estadosList.get(estado.getArestas().get(aresta).getpLista())));
-                    aresta ++;
-                    if (aresta >= tamanho && estVisitados.isEmpty())
-                        return null;
-                }
-                estVisitados.add(estado);
-                Toast.makeText(this, "Adicionou: "+estado.getId(), Toast.LENGTH_LONG).show();
-                return estVisitados;
-            }
-        }
-    }*/
 
     public Aresta verificaArestaEstadoAtual(Aresta arestaDEntrada, Estado estadAtual){
 
