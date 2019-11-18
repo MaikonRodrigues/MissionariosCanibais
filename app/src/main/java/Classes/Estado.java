@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Estado {
     int nCanibais, nMissionarios ;
-    char pCanoa;
+    char pCanoa; Estado estPai;
     String id;
     List<Aresta> arestas;
     int pLista;     // Posicao na lista
@@ -12,13 +12,22 @@ public class Estado {
     public Estado() {
     }
 
-    public Estado(String id, int nCanibais,int nMissionarios , char pCanoa, List<Aresta> arestas, int pLista) {
+    public Estado(String id, int nCanibais,int nMissionarios , char pCanoa, List<Aresta> arestas, int pLista, Estado estPai) {
         this.id = id;
         this.nCanibais = nCanibais;
         this.nMissionarios = nMissionarios;
         this.pCanoa = pCanoa;
         this.arestas = arestas;
         this.pLista = pLista;
+        this.estPai = estPai;
+    }
+
+    public Estado getEstPai() {
+        return estPai;
+    }
+
+    public void setEstPai(Estado estPai) {
+        this.estPai = estPai;
     }
 
     public int getpLista() {

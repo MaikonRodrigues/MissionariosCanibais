@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         radioGroup = (RadioGroup) findViewById(R.id.radiogroup);
 
         estadosList = new ArrayList<>();    flag = 0;   ladoAtual = 'd';
-        arestasList = new ArrayList<>();    check_1c = 0; check_1m =0;
+        check_1c = 0; check_1m =0;
 
 
         imgCanoa = (ImageView) findViewById(R.id.imgCanoa);
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         for (i = 0; i < 15; i ++){
 
             if (i == 0){    // Estado inicial
+                arestasList = new ArrayList<>();
                 aresta1 = new Aresta(1,0, "1_0d",1);  // Tres arestas possiveis sem retorno pos se trata
                 aresta2 = new Aresta(1,1, "1_1d", 2);  // do estado q0
                 aresta3 = new Aresta(2,0, "2_0d", 3);
@@ -81,150 +82,161 @@ public class MainActivity extends AppCompatActivity {
                 arestasList.add(aresta3);
 
 
-                estado = new Estado("3_3e",3,3,'e', arestasList, 0);
+                estado = new Estado("3_3e",3,3,'e', arestasList, 0, null);
 
                 estadosList.add(estado);
 
             }else if (i == 1){
-                // estado e acessado porem sem saida, logo so tem a aresta de volta para o estado inicial
-                aresta1 = new Aresta(1,0, "3_3e", 0);
-                arestasList.add(aresta1);
 
-                estado = new Estado("1_0d",1,0,'d', arestasList,1);
+                arestasList = new ArrayList<>();
+
+                estado = new Estado("1_0d",1,0,'d', arestasList,1, estadosList.get(0));
                 estadosList.add(estado);
 
             }else if (i == 2){
+                arestasList = new ArrayList<>();
 
-                aresta1 = new Aresta(1,1, "3_3e", 0);  // aresta de ida para estado anterior
-                aresta2 = new Aresta(0,1, "2_3e", 4);  // aresta para o proximo
+                aresta1 = new Aresta(0,1, "2_3e", 4);  // aresta para o proximo
                 arestasList.add(aresta1);
-                arestasList.add(aresta2);
 
-                estado = new Estado("1_1d",1,1,'d', arestasList,2);
+                estado = new Estado("1_1d",1,1,'d', arestasList,2, estadosList.get(0));
                 estadosList.add(estado);
 
             }else if (i == 3){
+                arestasList = new ArrayList<>();
 
                 aresta1 = new Aresta(1,0, "2_3e", 4 ); // aresta de ida
-                aresta2 = new Aresta(2,0, "3_3e", 0 ); // aresta de volta
                 arestasList.add(aresta1);
-                arestasList.add(aresta2);
 
-                estado = new Estado("2_0d",2,0,'d', arestasList,3);
+                //aresta2 = new Aresta(2,0, "3_3e", 0 ); // aresta de volta
+               // arestasList.add(aresta2);
+
+                estado = new Estado("2_0d",2,0,'d', arestasList,3, estadosList.get(0));
                 estadosList.add(estado);
 
             }else if (i == 4){
+                arestasList = new ArrayList<>();
 
                 aresta1 = new Aresta(2,0, "3_0d", 5);  // aresta de ida
-                aresta2 = new Aresta(0,1, "1_1d", 2);  // aresta de volta
+               // aresta2 = new Aresta(0,1, "1_1d", 2);  // aresta de volta
                 aresta3 = new Aresta(1,0, "2_0d", 3);  // aresta de volta
                 arestasList.add(aresta1);
-                arestasList.add(aresta2);
+               // arestasList.add(aresta2);
                 arestasList.add(aresta3);
 
-                estado = new Estado("2_3e",2,3,'e', arestasList,4);
+                estado = new Estado("2_3e",2,3,'e', arestasList,4 ,estadosList.get(2));
                 estadosList.add(estado);
 
             }else if (i == 5){
+                arestasList = new ArrayList<>();
 
                 aresta1 = new Aresta(1,0, "1_3e",6);  //aresta de ida
-                aresta2 = new Aresta(2,0, "2_3e", 4);  //aresta de volta
+               // aresta2 = new Aresta(2,0, "2_3e", 4);  //aresta de volta
                 arestasList.add(aresta1);
-                arestasList.add(aresta2);
+               // arestasList.add(aresta2);
 
-                estado = new Estado("3_0d",3,0,'d', arestasList,5);
+                estado = new Estado("3_0d",3,0,'d', arestasList,5, estadosList.get(4));
                 estadosList.add(estado);
 
             }else if (i == 6){
+                arestasList = new ArrayList<>();
 
                 aresta1 = new Aresta(0,2, "2_2d", 7);  //aresta de ida
-                aresta2 = new Aresta(1,0, "3_0d",5);  //aresta de volta
+               // aresta2 = new Aresta(1,0, "3_0d",5);  //aresta de volta
                 arestasList.add(aresta1);
-                arestasList.add(aresta2);
+               // arestasList.add(aresta2);
 
-                estado = new Estado("1_3e",1,3,'e', arestasList,6);
+                estado = new Estado("1_3e",1,3,'e', arestasList,6, estadosList.get(5));
                 estadosList.add(estado);
 
             }else if (i == 7){
+                arestasList = new ArrayList<>();
 
                 aresta1 = new Aresta(1,1, "2_2e", 8);  //aresta de ida
-                aresta2 = new Aresta(0,2, "1_3e", 6);  //aresta de ida
+               // aresta2 = new Aresta(0,2, "1_3e", 6);  //aresta de volta
                 arestasList.add(aresta1);
-                arestasList.add(aresta2);
+              //  arestasList.add(aresta2);
 
-                estado = new Estado("2_2d",2,2,'d', arestasList,7);
+                estado = new Estado("2_2d",2,2,'d', arestasList,7, estadosList.get(6));
                 estadosList.add(estado);
 
             }else if (i == 8){
 
+                arestasList = new ArrayList<>();
                 aresta1 = new Aresta(0,2, "1_3d", 9);  // aresta de ida
-                aresta2 = new Aresta(1,1, "2_2d", 7);  // aresta de volta
+               // aresta2 = new Aresta(1,1, "2_2d", 7);  // aresta de volta
                 arestasList.add(aresta1);
-                arestasList.add(aresta2);
+               // arestasList.add(aresta2);
 
-                estado = new Estado("2_2e",2,2,'e', arestasList,8);
+                estado = new Estado("2_2e",2,2,'e', arestasList,8, estadosList.get(7));
                 estadosList.add(estado);
 
             }else if (i == 9){
+                arestasList = new ArrayList<>();
 
                 aresta1 = new Aresta(1,0, "3_0e", 10);  //aresta de ida
-                aresta2 = new Aresta(1,0, "0_2e", 8);  //aresta de volta
+              //  aresta2 = new Aresta(1,0, "0_2e", 8);  //aresta de volta
                 arestasList.add(aresta1);
-                arestasList.add(aresta2);
+               // arestasList.add(aresta2);
 
-                estado = new Estado("1_3d",2,2,'d', arestasList,9);
+                estado = new Estado("1_3d",2,2,'d', arestasList,9, estadosList.get(8));
                 estadosList.add(estado);
 
             }else if (i == 10){
+                arestasList = new ArrayList<>();
 
                 aresta1 = new Aresta(2,0, "2_3d",11);  //aresta de ida
-                aresta2 = new Aresta(1,0, "1_3d",9);  //aresta de volta
+                //aresta2 = new Aresta(1,0, "1_3d",9);  //aresta de volta
                 arestasList.add(aresta1);
-                arestasList.add(aresta2);
+               // arestasList.add(aresta2);
 
-                estado = new Estado("3_0e",3,0,'e', arestasList,10);
+                estado = new Estado("3_0e",3,0,'e', arestasList,10, estadosList.get(9));
                 estadosList.add(estado);
 
             }else if (i == 11){
+                arestasList = new ArrayList<>();
 
                 aresta1 = new Aresta(1,0, "2_0e", 12);     //aresta de ida
                 aresta2 = new Aresta(0,1, "1_1e", 13);      // aresta de ida
-                aresta3 = new Aresta(2,0, "3_3e",10);      // aresta de volta
+               // aresta3 = new Aresta(2,0, "3_3e",10);      // aresta de volta
                 arestasList.add(aresta1);
                 arestasList.add(aresta2);
-                arestasList.add(aresta3);
+              //  arestasList.add(aresta3);
 
-                estado = new Estado("2_3d",2,3,'d', arestasList,11);
+                estado = new Estado("2_3d",2,3,'d', arestasList,11, estadosList.get(10));
                 estadosList.add(estado);
 
             }else if (i == 12){
+                arestasList = new ArrayList<>();
 
                 aresta1 = new Aresta(2,0, "3_3d",14);  // aresta de ida pro estado final
-                aresta2 = new Aresta(1,0, "2_3d",11);  // aresta de volta
+               // aresta2 = new Aresta(1,0, "2_3d",11);  // aresta de volta
                 arestasList.add(aresta1);
-                arestasList.add(aresta2);
+              //  arestasList.add(aresta2);
 
-                estado = new Estado("2_0e",2,0,'e', arestasList,12);
+                estado = new Estado("2_0e",2,0,'e', arestasList,12, estadosList.get(11));
                 estadosList.add(estado);
 
             }else if (i == 13){
+                arestasList = new ArrayList<>();
 
                 aresta1 = new Aresta(1,1, "3_3d",14);  // aresta de ida para o estado final
-                aresta2 = new Aresta(0,1, "2_3d",11);  // aresta de volta
+                //aresta2 = new Aresta(0,1, "2_3d",11);  // aresta de volta
                 arestasList.add(aresta1);
-                arestasList.add(aresta2);
+              // arestasList.add(aresta2);
 
-                estado = new Estado("1_1e",1,1,'e', arestasList,13);
+                estado = new Estado("1_1e",1,1,'e', arestasList,13, estadosList.get(11));
                 estadosList.add(estado);
 
             }else if (i == 14){
+                arestasList = new ArrayList<>();
 
                 aresta1 = new Aresta(1,1, "1_1e", 13);  // aresta de ida para o estado final
-                aresta2 = new Aresta(2,0, "2_0e", 12);  // aresta de volta
+               // aresta2 = new Aresta(2,0, "2_0e", 12);  // aresta de volta
                 arestasList.add(aresta1);
-                arestasList.add(aresta2);
+               // arestasList.add(aresta2);
 
-                estado = new Estado("3_3d",3,3,'d', arestasList,14);
+                estado = new Estado("3_3d",3,3,'d', arestasList,14, estadosList.get(12));
                 estadosList.add(estado);
 
             }
