@@ -276,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (levar_1c1m == 1){
                     try {
-                        rodar(1, 1, ladoAtual, estadosList);
+                        rodar(1, 1, ladoAtual);
                         //rodar1(1, 1, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
@@ -284,7 +284,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }else if (levar_1c == 1){
                     try {
-                        rodar(1, 0, ladoAtual, estadosList);
+                        rodar(1, 0, ladoAtual);
                         //rodar1(1, 0, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
@@ -293,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if (levar_1m == 1){
                     try {
-                        rodar(0, 1, ladoAtual, estadosList);
+                        rodar(0, 1, ladoAtual);
                        // rodar1(0, 1, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
@@ -301,7 +301,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }else if (levar_1c == 1){
                     try {
-                        rodar(1, 0, ladoAtual, estadosList);
+                        rodar(1, 0, ladoAtual);
                        // rodar1(1, 0, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
@@ -310,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if (levar_2c == 1){
                     try {
-                        rodar(2, 0, ladoAtual, estadosList);
+                        rodar(2, 0, ladoAtual);
                       //  rodar1(2, 0, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
@@ -318,7 +318,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }else if (levar_2m == 1){
                     try {
-                        rodar(0, 2, ladoAtual, estadosList);
+                        rodar(0, 2, ladoAtual);
                        // rodar1(0, 2, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
@@ -333,18 +333,36 @@ public class MainActivity extends AppCompatActivity {
         btnSolucao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                char lado = 'e';
                 buscaEmProfundidade.busca(estadosList.get(0));
                 Stack<Estado> pilhaaux = buscaEmProfundidade.getPilhaEstados();
                 while(!pilhaaux.isEmpty()){
-                    Estado a = pilhaaux.pop();
-                    Toast.makeText(MainActivity.this, "Desempilha: "+ a.getId(), Toast.LENGTH_LONG).show();
+                    Estado primeiroEstado = pilhaaux.pop();
+                    Estado segundoEstado = pilhaaux.pop();
+
+                    for (int a = 0; a < primeiroEstado.getArestas().size(); a++){
+                        if (primeiroEstado.getArestas().get(a).getpEstado() == segundoEstado.getId()){
+
+                            try {
+                                Toast.makeText(MainActivity.this, "Desempilha: "+ primeiroEstado.getId(), Toast.LENGTH_LONG).show();
+                                rodar(primeiroEstado.getArestas().get(a).getnCanibais(), primeiroEstado.getArestas().get(a).getnMissionarios(), lado);
+                                if (lado == 'e'){ lado = 'd'; } else { lado = 'e';}
+                                primeiroEstado = pilhaaux.pop();
+                                segundoEstado = primeiroEstado;
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+
                 }
             }
         });
 
     }
 
-    public void rodar(int quantCanibais, int quantMiss, char origem, List<Estado> L_Estados) throws InterruptedException {
+    public void rodar(int quantCanibais, int quantMiss, char origem) throws InterruptedException {
 
         if (origem == 'd'){
 
