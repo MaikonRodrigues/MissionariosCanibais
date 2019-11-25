@@ -74,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
 
             if (i == 0){    // Estado inicial
                 arestasList = new ArrayList<>();
-                aresta1 = new Aresta(1,0, "1_0d",1);  // Tres arestas possiveis sem retorno pos se trata
-                aresta2 = new Aresta(1,1, "1_1d", 2);  // do estado q0
+                aresta1 = new Aresta(1,0, "1_0d",1);
+                aresta2 = new Aresta(1,1, "1_1d", 2);
                 aresta3 = new Aresta(2,0, "2_0d", 3);
                 arestasList.add(aresta1);
                 arestasList.add(aresta2);
@@ -254,7 +254,6 @@ public class MainActivity extends AppCompatActivity {
                 if (levar_1c1m == 1){
                     try {
                         rodar(1, 1, ladoAtual);
-                        //rodar1(1, 1, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -262,7 +261,6 @@ public class MainActivity extends AppCompatActivity {
                 }else if (levar_1c == 1){
                     try {
                         rodar(1, 0, ladoAtual);
-                        //rodar1(1, 0, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -271,7 +269,6 @@ public class MainActivity extends AppCompatActivity {
                 else if (levar_1m == 1){
                     try {
                         rodar(0, 1, ladoAtual);
-                       // rodar1(0, 1, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -279,7 +276,6 @@ public class MainActivity extends AppCompatActivity {
                 }else if (levar_1c == 1){
                     try {
                         rodar(1, 0, ladoAtual);
-                       // rodar1(1, 0, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -288,7 +284,6 @@ public class MainActivity extends AppCompatActivity {
                 else if (levar_2c == 1){
                     try {
                         rodar(2, 0, ladoAtual);
-                      //  rodar1(2, 0, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -296,7 +291,6 @@ public class MainActivity extends AppCompatActivity {
                 }else if (levar_2m == 1){
                     try {
                         rodar(0, 2, ladoAtual);
-                       // rodar1(0, 2, ladoAtual);
                         if (ladoAtual == 'd') ladoAtual = 'e'; else ladoAtual = 'd';
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -324,11 +318,11 @@ public class MainActivity extends AppCompatActivity {
 
                             try {
                                 Toast.makeText(MainActivity.this, "Desempilha: "+ primeiroEstado.getId(), Toast.LENGTH_LONG).show();
-
+                                new Thread().sleep(3000);
                                 rodar(primeiroEstado.getArestas().get(a).getnCanibais(), primeiroEstado.getArestas().get(a).getnMissionarios(), lado);
 
                                 if (lado == 'e'){ lado = 'd'; } else { lado = 'e';}
-                                
+
                                 primeiroEstado = segundoEstado ;
                                 segundoEstado = pilhaaux.pop();
 
@@ -360,7 +354,7 @@ public class MainActivity extends AppCompatActivity {
             // new Thread().sleep(3000);
             movimentoCanoa('e');
             setImageBarco();
-            // new Thread().sleep(3000);
+             new Thread().sleep(3000);
 
             quantCanibEsquerda += quantCanibais;
             quantMissEsquerda += quantMiss;
@@ -442,15 +436,15 @@ public class MainActivity extends AppCompatActivity {
             imgDireita.setImageResource(R.drawable.cc);
         }else if (quantMissDireita == 0 && quantCanibDireita == 1){
             imgDireita.setImageResource(R.drawable.c);
+        }else if (quantMissDireita == 0 && quantCanibDireita == 0){
+            imgDireita.setVisibility(View.INVISIBLE);
         }else {
+            gameOver();
+            /*
             Toast.makeText(this, "Game Over", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        }/*else if (quantMissDireita == 1 && quantCanibDireita == 3){ //GAME
-            imgDireita.setImageResource(R.mipmap.cccm);
-        }else if (quantMissDireita == 2 && quantCanibDireita == 3){
-            imgDireita.setImageResource(R.mipmap.cccmm);
-        }*/
+            startActivity(intent);*/
+        }
     }
 
     public void setImageEsquerda(){
@@ -474,8 +468,10 @@ public class MainActivity extends AppCompatActivity {
             imgEsquerda.setImageResource(R.drawable.cc);
         }else if (quantMissEsquerda == 0 && quantCanibEsquerda == 3) {
             imgEsquerda.setImageResource(R.drawable.ccc);
+        }else if (quantMissEsquerda == 0 && quantCanibEsquerda == 0) {
+            imgEsquerda.setVisibility(View.INVISIBLE);
         }else{
-
+            gameOver();
         }
     }
 
