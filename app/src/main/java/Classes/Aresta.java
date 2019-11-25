@@ -1,9 +1,9 @@
 package Classes;
 
 public class Aresta {
-    int nMissionarios, nCanibais;
-    String pEstado;
-    int pLista;
+    private int nMissionarios, nCanibais;
+    private String pEstado;
+    private int pLista;
 
     public Aresta() {
     }

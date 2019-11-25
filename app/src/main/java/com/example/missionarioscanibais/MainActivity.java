@@ -304,6 +304,19 @@ public class MainActivity extends AppCompatActivity {
         btnSolucao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (escolherAlgoritmo() == 1){
+                    buscaEmProfundidade.busca(estadosList.get(0));
+                    Stack<Estado> pilhaaux = buscaEmProfundidade.getPilhaEstados();
+
+                    for (int k = 0; k < pilhaaux.size(); k++){
+                        Estado segundoEstado = pilhaaux.pop();
+                        Toast.makeText(MainActivity.this, "Estado visitado: "+ segundoEstado.getId(), Toast.LENGTH_LONG).show();
+                    }
+                }
+
+
+
+                /*
                 char lado = 'd';
                 buscaEmProfundidade.busca(estadosList.get(0));
                 Stack<Estado> pilhaaux = buscaEmProfundidade.getPilhaEstados();
@@ -332,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
 
- }
+                 }*/
             }
         });
 
@@ -397,7 +410,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
 
     public void setImageBarco(){
         if (quantCAnibBarco == 1 && quantMissBarco == 1){
@@ -483,6 +495,33 @@ public class MainActivity extends AppCompatActivity {
             imgCanoa.setX(130);
            // new Thread().sleep(1000);
         }
+    }
+
+    public int escolherAlgoritmo(){
+        final int[] retorno = {0};
+        //Cria o gerador do AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //define o titulo
+        builder.setTitle("Escolha um Algoritmo");
+
+        //define um botão como positivo
+        builder.setPositiveButton("Busca em Profundidade", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                retorno[0] = 1;
+            }
+        });
+
+        builder.setNegativeButton("Busca em Largura", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                retorno[0] = 1;
+            }
+        });
+
+        //cria o AlertDialog
+        AlertDialog alerta = builder.create();
+        //Exibe
+        alerta.show();
+        return 1;
     }
 
     public void gameOver(){
