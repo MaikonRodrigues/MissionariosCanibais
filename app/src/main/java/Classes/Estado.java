@@ -8,6 +8,7 @@ public class Estado {
     String id;
     List<Aresta> arestas;
     int pLista;     // Posicao na lista
+    //armazenada todos os estados possiveis
 
     public Estado() {
     }

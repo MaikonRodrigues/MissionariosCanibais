@@ -4,7 +4,7 @@ public class Aresta {
     private int nMissionarios, nCanibais;
     private String pEstado;
     private int pLista;
-
+    //Criada para armazenao os possiveis caminhos que poderam ser seguidos
     public Aresta() {
     }
 
